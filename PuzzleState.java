@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class PuzzleState extends Node{
     public PuzzleState(String state, int distance){
         super(state, distance);
@@ -60,5 +62,11 @@ public class PuzzleState extends Node{
             connectedNodes[++lastFilled] = Utilities.permutationIndex(neighbor);
         }
         return connectedNodes;
+    }
+
+    public boolean isSolution(){
+        System.out.println(Objects.equals(this.getState(), "123456780"));
+//        return Objects.equals((String)(n.getState()), (String) this.getState());
+        return Objects.equals(this.getState(), "123456780");
     }
 }

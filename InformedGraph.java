@@ -3,9 +3,12 @@ import java.util.*;
 public abstract class InformedGraph implements Graph{
     List<Node> nodes;
     Node solution;
-    public InformedGraph(Node solution){
-        this.solution = solution;
+    public InformedGraph(){
         nodes = new ArrayList<>();
+    }
+
+    public void setSolution(Node solution) {
+        this.solution = solution;
     }
 
     /**
@@ -15,9 +18,8 @@ public abstract class InformedGraph implements Graph{
     @Override
     public List<Node> getShortestPath(Node initial) {
         Node solution = this.aStar(initial);
-
-        // TODO: implement backward search
-        return null;
+        System.out.println(solution.getState());
+        return this.findPath(solution);
     }
 
     /**
@@ -26,7 +28,7 @@ public abstract class InformedGraph implements Graph{
      * @return the solution node
      */
     private Node aStar(Node node_start){
-        if(Objects.equals(node_start.getState(), solution.getState())) {
+        if(Objects.equals(node_start.getState(), "123456780")) {
             return node_start;
         }
         List<Node> closed = new ArrayList<Node>();
@@ -37,9 +39,10 @@ public abstract class InformedGraph implements Graph{
 
         while (!open.isEmpty()){
             Node node_current = open.poll();
-            if(Objects.equals(node_current.getState(), solution.getState())) {
+            if(Objects.equals(node_current.getState(), "123456780")) {
                 return node_current;
             }
+            // TODO: remove next line
             System.out.println(node_current.getState());
             int successor_current_cost = node_current.getDistance() + 1;
             int parent_index = this.getIndex(node_current);
@@ -61,12 +64,11 @@ public abstract class InformedGraph implements Graph{
         }
         return null;
     }
+    private List<Node> findPath(Node solution){
+        List<Node> path = new ArrayList<>();
 
-    /** @inheritDoc */
-    @Override
-    public List getNodes() {
-        // TODO implement
-        return null;
+        // TODO : implement backward search
+        return path;
     }
 
     /** @inheritDoc */
@@ -89,7 +91,7 @@ public abstract class InformedGraph implements Graph{
 
     /** @inheritDoc */
     @Override
-    public boolean addVertex(Node n) {
+    public boolean addNode(Node n) {
         return this.nodes.add(n);
     }
 

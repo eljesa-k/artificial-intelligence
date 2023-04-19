@@ -4,9 +4,6 @@ import java.util.List;
 public interface Graph<V> {
     public List<Node> getShortestPath(Node initial);
 
-    /** Return the vertices in the graph */
-    public java.util.List<V> getNodes();
-
     /** Return the object for the specified vertex index */
     public Node getNode(int index);
 
@@ -17,7 +14,7 @@ public interface Graph<V> {
     public void clear();
 
     /** Add a vertex to the graph */
-    public boolean addVertex(Node n);
+    public boolean addNode(Node n);
 
     /** Remove a vertex v from the graph, return true if successful */
     public boolean remove(V v);
