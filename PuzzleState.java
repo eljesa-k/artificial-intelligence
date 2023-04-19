@@ -64,9 +64,4 @@ public class PuzzleState extends Node{
         return connectedNodes;
     }
 
-    public boolean isSolution(){
-        System.out.println(Objects.equals(this.getState(), "123456780"));
-//        return Objects.equals((String)(n.getState()), (String) this.getState());
-        return Objects.equals(this.getState(), "123456780");
-    }
 }

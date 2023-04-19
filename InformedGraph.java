@@ -18,13 +18,12 @@ public abstract class InformedGraph implements Graph{
     @Override
     public List<Node> getShortestPath(Node initial) {
         Node solution = this.aStar(initial);
-        System.out.println(solution.getState());
         return this.findPath(solution);
     }
 
     /**
      * Finds the solutions and marks who are the parents
-     * @param node_start the node from wich we start searching
+     * @param node_start the node from which we start searching
      * @return the solution node
      */
     private Node aStar(Node node_start){
@@ -42,8 +41,6 @@ public abstract class InformedGraph implements Graph{
             if(Objects.equals(node_current.getState(), "123456780")) {
                 return node_current;
             }
-            // TODO: remove next line
-            System.out.println(node_current.getState());
             int successor_current_cost = node_current.getDistance() + 1;
             int parent_index = this.getIndex(node_current);
 
@@ -67,6 +64,11 @@ public abstract class InformedGraph implements Graph{
     private List<Node> findPath(Node solution){
         List<Node> path = new ArrayList<>();
 
+        Node current_node = solution;
+        while(current_node.getParentIndex() != -1){
+            path.add(current_node);
+            current_node = this.getNode(current_node.getParentIndex());
+        }
         // TODO : implement backward search
         return path;
     }
