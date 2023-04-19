@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Graph<V> {
-    public List<Node> getShortestPath();
+    public List<Node> getShortestPath(Node initial);
 
     /** Return the vertices in the graph */
     public java.util.List<V> getNodes();
 
     /** Return the object for the specified vertex index */
-    public V getNode(int index);
+    public Node getNode(int index);
 
     /** Return the index for the specified vertex object */
     public int getIndex(Node n);
