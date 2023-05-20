@@ -16,6 +16,10 @@ public class Matrix {
         boolean symmetric = isSymmetric();
         if (!symmetric){
             fixMatrix();
+        }else {
+            for (int i=0; i < matrix.length; i ++) {
+                matrix[i][i] = IntersectionType.ALWAYS;
+            }
         }
     }
 
