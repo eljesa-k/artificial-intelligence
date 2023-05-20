@@ -9,6 +9,7 @@ public abstract class TrafficLights {
     protected int PREF_MAX_TIME_RED;
 
     public TrafficLights(boolean isGreen, int timeFrame, int MIN_TIME_GREEN, int MAX_TIME_RED, int PREF_MIN_TIME_GREEN, int PREF_MAX_TIME_RED) {
+        this.priority=1;
         this.isGreen = isGreen;
         this.timeFrame = timeFrame;
         this.MIN_TIME_GREEN = MIN_TIME_GREEN;
@@ -27,5 +28,5 @@ public abstract class TrafficLights {
         this.PREF_MAX_TIME_RED = PREF_MAX_TIME_RED;
     }
 
-    public abstract double getScore(int[]sequence);
+    public abstract double getScore(boolean[]sequence);
 }

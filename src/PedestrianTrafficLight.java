@@ -9,7 +9,7 @@ public class PedestrianTrafficLight extends TrafficLights{
     }
 
     @Override
-    public double getScore(int[] sequence) {
+    public double getScore(boolean[] sequence) {
         return 0;
     }
 }
