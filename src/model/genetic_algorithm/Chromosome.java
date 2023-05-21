@@ -68,7 +68,6 @@ public class Chromosome extends Sequence {
                 }
             }
         }
-
         return new Chromosome[] {
                 new Chromosome(new Sequence(getTrafficLights(), child1)),
                 new Chromosome(new Sequence(getTrafficLights(), child2))

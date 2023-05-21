@@ -9,6 +9,13 @@ import java.io.IOException;
 public class Matrix {
     private IntersectionType[][] matrix;
     private String fileName;
+
+    /**
+     * Merr matricën e kufizimeve nga një file.
+     *
+     * @param fileName Emri i file që përmban matricën e kufizimeve.
+     * @return Matrica e kufizimeve.
+     */
     public IntersectionType[][] getMatrix(String fileName){
         this.fileName = fileName;
         readFromFile();
@@ -16,8 +23,14 @@ public class Matrix {
         return matrix;
     }
 
+    /**
+     * Validon matricën e kufizimeve.
+     * Kontrollon nëse matrica është simetrike dhe nëse jo, e rregullon atë.
+     * Nëse matrica është simetrike, vendos vlerën IntersectionType.ALWAYS në diagonale.
+     */
     private void validateMatrix() {
         boolean symmetric = isSymmetric();
+
         if (!symmetric){
             fixMatrix();
         }else {
@@ -27,17 +40,25 @@ public class Matrix {
         }
     }
 
+    /**
+     * Rregullon matricën e kufizimeve.
+     * Rregullon matricën duke vendosur vlerën IntersectionType.ALWAYS në diagonale
+     * dhe duke përdorur vlerat simetrike në pjesën e poshtme të matricës.
+     */
     private void fixMatrix() {
         int n = matrix.length;
+
         for (int i = 0; i < n; i++) {
             if (matrix[i][i] != IntersectionType.ALWAYS) {
                 matrix[i][i] = IntersectionType.ALWAYS;
             }
         }
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 IntersectionType value1 = matrix[i][j];
                 IntersectionType value2 = matrix[j][i];
+
                 if (value1 == IntersectionType.NEVER || value2 == IntersectionType.NEVER) {
                     matrix[i][j] = IntersectionType.NEVER;
                     matrix[j][i] = IntersectionType.NEVER;
@@ -55,8 +76,14 @@ public class Matrix {
         }
     }
 
+    /**
+     * Verifikon nëse matrica është simetrike.
+     *
+     * @return True nëse matrica është simetrike, në të kundërt False.
+     */
     private boolean isSymmetric() {
         int n = matrix.length;
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 if (matrix[i][j] != matrix[j][i]) {
@@ -64,28 +91,40 @@ public class Matrix {
                 }
             }
         }
+
         return true;
     }
 
+    /**
+     * Lexon matricën e kufizimeve nga file.
+     * File duhet të jetë në formatin e duhur dhe të përmbajë vlerat e matricës.
+     */
     private void readFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             int n = 0;
             String line;
+
             while ((line = reader.readLine()) != null) {
                 n++;
             }
+
             matrix = new IntersectionType[n][n];
+
             try (BufferedReader fileReader = new BufferedReader(new FileReader(fileName))) {
                 int row = 0;
+
                 while ((line = fileReader.readLine()) != null) {
                     String[] values = line.split(",");
+
                     if (values.length != n) {
                         System.out.println("Invalid number of values in line " + (row + 1) + ".");
                         return;
                     }
+
                     for (int col = 0; col < n; col++) {
                         matrix[row][col] = convertToIntersectionType(values[col].trim());
                     }
+
                     row++;
                 }
             }
@@ -93,6 +132,14 @@ public class Matrix {
             System.out.println("Error reading file: " + e.getMessage());
         }
     }
+
+    /**
+     * Konverton një string në tipin e IntersectionType.
+     *
+     * @param value Stringu për tu konvertuar.
+     * @return Tipi i IntersectionType i konvertuar.
+     * @throws IllegalArgumentException Nëse vlera e dhënë është e pavlefshme.
+     */
     private IntersectionType convertToIntersectionType(String value) {
         switch (value) {
             case "ALWAYS":
