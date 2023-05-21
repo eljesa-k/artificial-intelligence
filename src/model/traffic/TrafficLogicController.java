@@ -1,6 +1,7 @@
 package model.traffic;
 
 import model.IntersectionType;
+import model.traffic.constraint.TrafficCoefficient;
 import model.traffic.constraint.constraintMatrix.Matrix;
 
 import java.io.FileInputStream;
@@ -31,6 +32,7 @@ public class TrafficLogicController {
             prop.load(fis);
 
             IntersectionType constraints[][] = new Matrix().getMatrix("matrix.csv");
+            double[] trafficCoefficients = new TrafficCoefficient().getValuesFromFile("random_numbers.csv");
             trafficLights = new TrafficLight[16];
             allowedTimeToRun = Integer.parseInt(prop.get("allowed_time_to_run").toString());
             int time_frame = Integer.parseInt(prop.get("time_frame").toString());
@@ -51,8 +53,8 @@ public class TrafficLogicController {
             cool = Integer.parseInt(prop.get("cool_constraint_penallty").toString());
 
             for (int i = 0; i < 12; i++) {
-                trafficLights[i] = new VehicleTrafficLight(constraints[i], i, false,time_frame,
-                                                            min_time_green_vehicle, max_time_red_vehicle, preferred_time_green_vehicle, preferred_time_red_vehicle);
+                trafficLights[i] = new VehicleTrafficLight(constraints[i], i, false,time_frame,0.1,
+                                                            min_time_green_vehicle, max_time_red_vehicle, preferred_time_green_vehicle, preferred_time_red_vehicle, trafficCoefficients[i]);
             }
             for (int i = 12; i < 16; i++) {
                 trafficLights[i] = new PedestrianTrafficLight(constraints[i], i, false,time_frame,
