@@ -1,3 +1,5 @@
+package test;
+
 public class TestSequence {
     public static void main(String[] args) {
 

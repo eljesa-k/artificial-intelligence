@@ -1,3 +1,7 @@
+package model.matrix;
+
+import model.IntersectionType;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;

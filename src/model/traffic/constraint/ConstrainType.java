@@ -1,3 +1,5 @@
+package model.traffic.constraint;
+
 public enum ConstrainType {
     HARD_CONSTRAIN_PENALTY,
     COOL_CONSTRAIN_PENALTY,

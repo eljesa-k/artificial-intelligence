@@ -1,3 +1,5 @@
+package model.traffic.constraint;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

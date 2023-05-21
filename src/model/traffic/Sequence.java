@@ -1,6 +1,11 @@
+package model.traffic;
+
+import model.traffic.Node;
+import model.traffic.TrafficLights;
+
 import java.util.Arrays;
 
-public class Sequence implements Node{
+public class Sequence implements Node {
     TrafficLights[] trafficLights;
     private boolean[][] sequence;
     private double score;

@@ -1,17 +1,19 @@
+package test;
+
 public class TestMatrix {
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
 
         IntersectionType[][] matrix1 = matrix.getMatrix("matrix.csv");
         if (matrix1 != null) {
-            System.out.println("Matrix from matrix.csv:");
+            System.out.println("model.matrix.Matrix from matrix.csv:");
             printMatrix(matrix1);
         }
 
         System.out.println();
         IntersectionType[][] matrix2 = matrix.getMatrix("non_symmetric_matrix.csv");
         if (matrix2 != null) {
-            System.out.println("Matrix from non_symmetric_matrix.csv:");
+            System.out.println("model.matrix.Matrix from non_symmetric_matrix.csv:");
             printMatrix(matrix2);
         }
     }
