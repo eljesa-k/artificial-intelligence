@@ -36,12 +36,8 @@ public class Chromosome extends Sequence {
         boolean[][] sequence2 = chromosome.getSequence();
         int n = sequence1.length;
         int m = sequence1[0].length;
-
-        // Create child chromosome arrays
         boolean[][] child1 = new boolean[n][m];
         boolean[][] child2 = new boolean[n][m];
-
-        // Iterate over each gene in the chromosomes
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 double random = Math.random();

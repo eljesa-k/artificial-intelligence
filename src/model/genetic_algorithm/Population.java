@@ -18,12 +18,23 @@ public class Population{
 
     public void initializePopulation(Sequence sequence, int initialPopulationSize) {
         for (int i = 0; i < initialPopulationSize; i++) {
-            Chromosome chromosome = new Chromosome(sequence);
+            Chromosome chromosome = createRandomChromosome(sequence);
             population.add(chromosome);
         }
     }
 
-    public Chromosome selectIndividual() {
+    private Chromosome createRandomChromosome(Sequence sequence) {
+        boolean[][] originalSequence = sequence.getSequence();
+        boolean[][] randomSequence = new boolean[originalSequence.length][];
+        for (int i = 0; i < originalSequence.length; i++) {
+            randomSequence[i] = originalSequence[i].clone();
+            for (int j = 0; j < originalSequence[i].length; j++) {
+                randomSequence[i][j] = Math.random() < 0.5; // Set gene randomly to true or false
+            }
+        }
+        return new Chromosome(new Sequence(sequence.getTrafficLights(), randomSequence));
+    }
+public Chromosome selectIndividual() {
         Random random = new Random();
         int randomIndex = random.nextInt(population.size());
         return population.get(randomIndex);
