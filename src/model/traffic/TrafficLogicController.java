@@ -16,6 +16,11 @@ public class TrafficLogicController {
     private static int cool;
     private static int allowedTimeToRun;
 
+    /**
+     * Reads all the config and constraints and creates traffic light instances
+     * Saves all the config data as static variables
+     * Initialized using Singleton Design Pattern
+     */
     private TrafficLogicController() {
         // Source for reading config file
         // https://stackoverflow.com/questions/16273174/how-to-read-a-configuration-file-in-java

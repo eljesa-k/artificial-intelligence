@@ -20,16 +20,23 @@ public class Population{
         this.population = new ArrayList<>();
     }
 
+    /**
+     * Controls the process of Crossover, Mutation and Selection over the population created
+     * Initial population is generated randomly
+     * @return Best Chromosome that has been generated for the allowed time
+     */
     public Chromosome performGeneticAlgorithm(){
-        Chromosome randomSequence = new Chromosome(new Sequence(TrafficLogicController.getTrafficLights(), new boolean[TrafficLogicController.getTrafficLights().length][TrafficLogicController.getSequenceLength()]));
+        Chromosome randomSequence = this.crateRandomChromosome();
 
         PriorityQueue<Chromosome> P = initializePopulation(randomSequence, this.populationSize);
         Chromosome best = P.peek();
         population = new ArrayList<>(P);
 
-        int k = 1;
-        int times = TrafficLogicController.getAllowedTimeToRun();
-        while (best.getScore() != 1_000_000 && k < times){
+        int k = 0;
+        int i = 0;
+        Date start_time = new Date();
+        int timeToRun = TrafficLogicController.getAllowedTimeToRun() * 1000;
+        while (best.getScore() < 1_000_000 && k < timeToRun){
             PriorityQueue<Chromosome> Q = new PriorityQueue<>(populationSize, new ChromosomeComparator());
 
             Q = performCrossover(0.5);
@@ -41,8 +48,9 @@ public class Population{
             best = P.peek();
             population = new ArrayList<>(P);
 
-            System.out.println("Iterimi " + k + ": " + best.getScore());
-            k += 15;
+            System.out.println("Iterimi " + i + ": " + best.getScore());
+            k = (int)(new Date().getTime() - start_time.getTime());
+            i++;
         }
         return best;
     }
@@ -219,8 +227,25 @@ public class Population{
         this.populationSize = populationSize;
     }
 
+    /**
+     * Creates a chromosome by initializing a random sequence
+     * @return a new Chromosome
+     */
+    private Chromosome crateRandomChromosome(){
+        int trafficLightsSize = TrafficLogicController.getTrafficLights().length;
+        int sequenceLength = TrafficLogicController.getSequenceLength();
+
+        boolean[][] seq = new boolean[trafficLightsSize][sequenceLength];
+        for (int i = 0; i < trafficLightsSize; i++) {
+            for (int j = 0; j < sequenceLength; j++) {
+                seq[i][j] = Math.random() <= 0.5;
+            }
+        }
+        return new Chromosome(new Sequence(TrafficLogicController.getTrafficLights(), seq));
+    }
+
     public static void main(String[] args) {
-        Population p = new Population(20);
+        Population p = new Population(30);
 
         p.performGeneticAlgorithm();
     }
