@@ -1,5 +1,10 @@
 package test;
 
+import model.IntersectionType;
+import model.traffic.Sequence;
+import model.traffic.TrafficLights;
+import model.traffic.VehicleTrafficLight;
+
 public class TestSequence {
     public static void main(String[] args) {
 

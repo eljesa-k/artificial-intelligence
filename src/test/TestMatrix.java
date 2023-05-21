@@ -1,5 +1,8 @@
 package test;
 
+import model.IntersectionType;
+import model.matrix.Matrix;
+
 public class TestMatrix {
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
