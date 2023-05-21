@@ -149,4 +149,5 @@ public abstract class TrafficLights {
     public int getPrefMaxTimeRed() {
         return prefMaxTimeRed;
     }
+
 }

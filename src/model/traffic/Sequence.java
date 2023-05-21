@@ -44,4 +44,8 @@ public class Sequence implements Node {
     public boolean[][] getSequence() {
         return sequence;
     }
+
+    public TrafficLights[] getTrafficLights() {
+        return trafficLights;
+    }
 }
