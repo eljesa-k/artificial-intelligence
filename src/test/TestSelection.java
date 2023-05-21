@@ -6,7 +6,7 @@ import model.traffic.Sequence;
 import model.traffic.TrafficLight;
 import model.traffic.VehicleTrafficLight;
 
-public class TestChromosome{
+public class TestSelection {
     public static void main(String[] args) {
         IntersectionType[] intersectionTypes1 = {IntersectionType.ALWAYS, IntersectionType.NEVER};
         VehicleTrafficLight trafficLight1 = new VehicleTrafficLight(
@@ -47,7 +47,6 @@ public class TestChromosome{
         Chromosome[] children = parent1.crossover(parent2);
         System.out.println("Child 1 Score: " + children[0].getScore());
         System.out.println("Child 2 Score: " + children[1].getScore());
+        
     }
 }
-
-

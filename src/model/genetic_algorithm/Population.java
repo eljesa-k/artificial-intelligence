@@ -3,9 +3,7 @@ package model.genetic_algorithm;
 import model.genetic_algorithm.Chromosome;
 import model.traffic.Sequence;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Population{
     private List<Chromosome> population;
@@ -84,8 +82,57 @@ public class Population{
                 offspring.add(parent2);
             }
         }
-        population = offspring;
+        population = performSelection(offspring);
     }
+
+
+    /**
+     * @param offspring krijohet gjenerata e re nga crossover dhe me pas thirret perfromSelection duke ja pasuar
+     *                  listen me kromozome offspring
+     *                  offspring sortohet me ane te f-onit getScore si Comparator ne PriorityQueue
+     *                  prej qasaj PQ vendosen me ni AL edhe pastaj merren
+     *                  90% e popullates prej better half
+     *                  10% e popullates prej other half
+     *                  edhe corssover e merr si popullata e re
+     * @return
+     */
+    public List<Chromosome> performSelection(List<Chromosome> offspring){
+        PriorityQueue<Chromosome> selectionElements = new PriorityQueue<>(populationSize, new ChromosomeComparator());
+        for (int i = 0; i < populationSize; i++) {
+            selectionElements.add(offspring.get(i));
+        }
+        List<Chromosome> selectedList = new ArrayList<>();
+        while(selectionElements.size()>0){
+            selectedList.add(selectionElements.poll());
+        }
+        List<Chromosome> finalSelectedList = new ArrayList<>();
+        for (int i = 0; i < (int)(populationSize*0.9); i++) {
+            finalSelectedList.add(selectedList.get(getRandomNumber(0,(selectedList.size()/2))));
+        }
+        for (int i = 0; i < (int)(populationSize*0.1); i++) {
+            finalSelectedList.add(selectedList.get(getRandomNumber((selectedList.size()/2), selectedList.size())));
+        }
+        return finalSelectedList;
+    }
+
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    class ChromosomeComparator implements Comparator<Chromosome>{
+
+        @Override
+        public int compare(Chromosome ch1, Chromosome ch2) {
+            if(ch1.getScore() < ch2.getScore()){
+                return 1;
+            }
+            else if (ch1.getScore() > ch2.getScore()) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
     /**
      * Realizimi i mutacionit në popullsi.
      * Realizon mutacion në secilin kromozom të popullsisë.
