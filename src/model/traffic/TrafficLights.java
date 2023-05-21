@@ -2,6 +2,7 @@ package model.traffic;
 
 import model.IntersectionType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
@@ -63,7 +64,75 @@ public abstract class TrafficLights {
      * @param sequence nje rresht i timeframe si array
      * @return score-in i cili mund te jete pozitiv ose negativ varur nga penaltite qe ka marrur ky semafor ne timeframe-n perkates
      */
-    public abstract double timeConstrainScore(boolean[] sequence);
+    public double timeConstrainScore(boolean[] sequence){
+        double score =0;
+        ArrayList<Integer> opened = new ArrayList<>();
+        ArrayList<Integer> closed = new ArrayList<>();
+        int timesTrue=0;
+        while(true){
+            int count =0;
+            for (int i = timesTrue; i < sequence.length; i++) {
+                if(sequence[i]){
+                    count++;
+                    timesTrue++;
+                }
+                else{
+                    timesTrue++;
+                    break;
+                }
+            }
+            if(count!=0){
+                opened.add(count);
+            }
+            if(timesTrue== sequence.length){
+                break;
+            }
+        }
+        int timesFalse=0;
+        while(true){
+            int count =0;
+            for (int i = timesFalse; i < sequence.length; i++) {
+                if(!sequence[i]){
+                    count++;
+                    timesFalse++;
+                }
+                else{
+                    timesFalse++;
+                    break;
+                }
+            }
+            if(count!=0){
+                closed.add(count);
+            }
+            if(timesFalse== sequence.length){
+                break;
+            }
+        }
+
+        for (int i = 0; i < opened.size(); i++) {
+            if(opened.get(i)<minTimeGreen){
+                score+=-50000;
+            }
+            if(minTimeGreen<=opened.get(i) && opened.get(i)<prefMinTimeGreen){
+                score+=500;
+            }
+            if(opened.get(i)>=prefMinTimeGreen){
+                score+=1000;
+            }
+        }
+        for (int i = 0; i < closed.size(); i++) {
+            if(closed.get(i)>maxTimeRed){
+                score+=-50000;
+            }
+            if(prefMaxTimeRed<closed.get(i) && closed.get(i)<=maxTimeRed){
+                score+=500;
+            }
+            if(closed.get(i)<=prefMaxTimeRed) {
+                score += 1000;
+            }
+        }
+        return score;
+    }
     private double compatibilityConstraintScore(boolean[] sequence){
 
         return IntStream.range(0, trafficLightsConstraint.length)
@@ -149,4 +218,5 @@ public abstract class TrafficLights {
     public int getPrefMaxTimeRed() {
         return prefMaxTimeRed;
     }
+
 }
