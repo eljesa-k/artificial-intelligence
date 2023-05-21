@@ -4,20 +4,28 @@ public class VehicleTrafficLight extends TrafficLights{
 
     private double trafficCoeff;
 
-    public VehicleTrafficLight(boolean isGreen, int timeFrame, int MIN_TIME_GREEN, int MAX_TIME_RED, int PREF_MIN_TIME_GREEN, int PREF_MAX_TIME_RED, double trafficCoeff) {
-        super(isGreen, timeFrame, MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED);
+    /**
+     * @param isGreen
+     * @param timeFrame gjatesia e intervalit kohor per nje frame
+     * @param MIN_TIME_GREEN minimumi i frame-ave per te cilet semafori dueht te rri i hapur per te mos marre hard penalty
+     * @param MAX_TIME_RED maksimumi i frame-ave per te cilet semafori guxon te rri i mbyllur pa marre hard penalty
+     * @param PREF_MIN_TIME_GREEN numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i hapur
+     * @param PREF_MAX_TIME_RED numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i mbyllur
+     * @param trafficCoeff koeficienti i ngarkeses se trafikut
+     */
+    public VehicleTrafficLight(IntersectionType[] trafficLightsConstraint, int index, boolean isGreen, int timeFrame, int MIN_TIME_GREEN, int MAX_TIME_RED, int PREF_MIN_TIME_GREEN, int PREF_MAX_TIME_RED, double trafficCoeff) {
+        super(trafficLightsConstraint, index,isGreen, timeFrame, MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED);
         this.trafficCoeff = trafficCoeff;
     }
 
-    public VehicleTrafficLight(boolean isGreen, int timeFrame, double priority, int MIN_TIME_GREEN, int MAX_TIME_RED, int PREF_MIN_TIME_GREEN, int PREF_MAX_TIME_RED, double trafficCoeff) {
-        super(isGreen, timeFrame, priority, MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED);
+    public VehicleTrafficLight(IntersectionType[] trafficLightsConstraint, int index,boolean isGreen, int timeFrame, double priority, int MIN_TIME_GREEN, int MAX_TIME_RED, int PREF_MIN_TIME_GREEN, int PREF_MAX_TIME_RED, double trafficCoeff) {
+        super(trafficLightsConstraint, index, isGreen, timeFrame, priority, MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED);
         this.trafficCoeff = trafficCoeff;
     }
 
     @Override
-    public double getScore(boolean[] sequence) {
-        double score =0;
-        return score;
+    public double getScore(boolean[][] sequence) {
+        return super.getScore(sequence) * trafficCoeff;
     }
 
     int MIN_TIME_GREEN = this.getMinTimeGreen();
@@ -26,14 +34,10 @@ public class VehicleTrafficLight extends TrafficLights{
     int PREF_MAX_TIME_RED =  this.getPrefMaxTimeRed();
 
     /**
-     * @param sequence e merr nje rresht te timeframe si array
-     * @param minTimeGreen minimumi i frame-ave per te cilet semafori dueht te rri i hapur per te mos marre hard penalty
-     * @param maxTimeRed maksimumi i frame-ave per te cilet semafori guxon te rri i mbyllur pa marre hard penalty
-     * @param prefMinTimeGreen numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i hapur
-     * @param prefMaxTimeRed numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i mbyllur
-     * @return score-in i cili mund te jete pozitiv ose negativ varur nga penaltite qe ka marrur ky semafor ne timeframe-n perkates
+     * @inheritDoc
      */
-    public static double timeConstrainScore(boolean[] sequence, int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed){
+    @Override
+    public double timeConstrainScore(boolean[] sequence){
         double score =0;
         ArrayList<Integer> opened = new ArrayList<>();
         ArrayList<Integer> closed = new ArrayList<>();

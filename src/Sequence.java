@@ -1,108 +1,42 @@
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public class Sequence implements Node{
     TrafficLights[] trafficLights;
-    IntersectionType[][] tlConstraints;
-    boolean[][] sequence;
+    private boolean[][] sequence;
     private double score;
 
-    public Sequence(TrafficLights[] trafficLights, IntersectionType[][] tlConstraints, boolean[][] sequence) {
+    /**
+     * Modelon nje moster qe mund te jete zgjidhje e problemit
+     * @param trafficLights vargu i semaforeve
+     * @param sequence vargu i gjendjeve te semaforeve ne secilin interval kohor
+     */
+    public Sequence(TrafficLights[] trafficLights, boolean[][] sequence) {
         this.trafficLights = trafficLights;
-        this.tlConstraints = tlConstraints;
         this.sequence = sequence;
 
-        this.calculateScore();
+        this.score = this.calculateScore();
     }
 
+    /**
+     * Kthen fitnesin e monstres
+     * @return score
+     */
     @Override
     public double getScore() {
         return score;
     }
 
-    private void calculateScore(){
-        this.score =  Arrays.stream(sequence)
-                        .map(timeFrame -> IntStream.range(0, trafficLights.length)
-                        .mapToObj(i -> checkTrafficLightCompatibility(tlConstraints[i], timeFrame, i))
-                        .reduce(0.0, Double::sum))
-                        .reduce(0.0, Double::sum);
-
-//        for (int i = 0; i < sequence.length; i++) {
-//            for (int j = 0; j < tlConstraints.length; j++) {
-//                    this.score += checkTrafficLightCompatibility(tlConstraints[j], sequence[i], j);
-//            }
-//            System.out.println();
-//        }
-    }
-
-    private double checkTrafficLightCompatibility(IntersectionType[] type, boolean[] seq, int index){
-
-        return IntStream.range(0, type.length)
-                .filter(i -> i != index)
-                .mapToObj(i -> seq[index] ? checkCompatibilityForOpen(type[i], seq[i]) : checkCompatibilityForClosed(type[i], seq[i]))
+    /**
+     * Llogarit fitnesin e kesaj sekuence si shume e fitneseve te secilit semafor
+     * @return score
+     */
+    private double calculateScore(){
+        return Arrays.stream(this.trafficLights)
+                .map(item -> item.getScore(sequence))
                 .reduce(0.0, Double::sum);
-
-//        double sumPoints = 0;
-//        if(seq[index]) {
-//            for (int i = 0; i < type.length; i++) {
-//                if (index != i)
-//                    sumPoints += checkCompatibilityForOpen(type[i], seq[i]);
-//            }
-//        }
-//        else
-//            for (int i = 0; i < type.length; i++) {
-//                if(index != i)
-//                    sumPoints += checkCompatibilityForClosed(type[i], seq[i]);
-//            }
-//        System.out.println(sumPoints);
-//        return sumPoints;
     }
 
-    private double checkCompatibilityForOpen(IntersectionType type, boolean affirmative){
-        int hard = 100_000;
-        int soft = 500;
-        int cool = 10;
-
-        switch (type){
-            case NEVER -> {
-                return affirmative ? - hard : cool;
-            }
-            case UNPREFERRED-> {
-                return affirmative ? - soft  : soft;
-            }
-            case ACCEPTABLE -> {
-                return affirmative ? soft : - soft;
-            }
-            case ALWAYS -> {
-                return affirmative ? cool : - hard;
-            }
-            default -> {
-                return 0;
-            }
-        }
+    public boolean[][] getSequence() {
+        return sequence;
     }
-    private double checkCompatibilityForClosed(IntersectionType type, boolean affirmative){
-        int hard = 100_000;
-        int soft = 500;
-        int cool = 10;
-
-        switch (type){
-            case NEVER -> {
-                return affirmative ? soft : - soft;
-            }
-            case UNPREFERRED-> {
-                return affirmative ? soft : - cool;
-            }
-            case ACCEPTABLE -> {
-                return affirmative ? - soft : cool;
-            }
-            case ALWAYS -> {
-                return affirmative ? - hard : cool;
-            }
-            default -> {
-                return 0;
-            }
-        }
-    }
-
 }

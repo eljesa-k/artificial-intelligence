@@ -1,7 +1,12 @@
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public abstract class TrafficLights {
     public boolean isGreen;
     private int timeFrame;
     private double priority;
+    private IntersectionType[] trafficLightsConstraint;
+    private int index;
 
     protected int minTimeGreen;
     protected int maxTimeRed;
@@ -9,24 +14,32 @@ public abstract class TrafficLights {
     protected int prefMaxTimeRed;
 
     /**
-     * @param isGreen tregon a eshte i hapur per kalim apo jo semafori perkates
-     * @param timeFrameLength in seconds psh 10 sek ni frame mu kon i gjate
-     * @param minTimeGreen minimumi i frame-ave per te cilet semafori dueht te rri i hapur per te mos marre hard penalty
-     * @param maxTimeRed maksimumi i frame-ave per te cilet semafori guxon te rri i mbyllur pa marre hard penalty
+     * @param isGreen          tregon a eshte i hapur per kalim apo jo semafori perkates
+     * @param timeFrameLength  in seconds psh 10 sek ni frame mu kon i gjate
+     * @param minTimeGreen     minimumi i frame-ave per te cilet semafori dueht te rri i hapur per te mos marre hard penalty
+     * @param maxTimeRed       maksimumi i frame-ave per te cilet semafori guxon te rri i mbyllur pa marre hard penalty
      * @param prefMinTimeGreen numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i hapur
-     * @param prefMaxTimeRed numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i mbyllur
+     * @param prefMaxTimeRed   numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i mbyllur
      */
-    public TrafficLights(boolean isGreen, int timeFrameLength, int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed) {
-        this.priority=1;
+    public TrafficLights(IntersectionType[] trafficLightsConstraint, int index, boolean isGreen, int timeFrameLength,
+                         int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed) {
+        this.priority = 1;
+        this.index = index;
         this.isGreen = isGreen;
         this.timeFrame = timeFrameLength;
         this.minTimeGreen = minTimeGreen;
         this.maxTimeRed = maxTimeRed;
         this.prefMinTimeGreen = prefMinTimeGreen;
         this.prefMaxTimeRed = prefMaxTimeRed;
+        this.trafficLightsConstraint = trafficLightsConstraint;
+
     }
 
-    public TrafficLights(boolean isGreen, int timeFrame, double priority, int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed) {
+    public TrafficLights(IntersectionType[] trafficLightsConstraint, int index,
+                         boolean isGreen, int timeFrame, double priority, int minTimeGreen, int maxTimeRed,
+                         int prefMinTimeGreen, int prefMaxTimeRed) {
+        this.trafficLightsConstraint = trafficLightsConstraint;
+        this.index = index;
         this.isGreen = isGreen;
         this.timeFrame = timeFrame;
         this.priority = priority;
@@ -36,8 +49,87 @@ public abstract class TrafficLights {
         this.prefMaxTimeRed = prefMaxTimeRed;
     }
 
-    public abstract double getScore(boolean[]sequence);
+    public double getScore(boolean[][] sequence) {
+        return Arrays.stream(sequence)
+                .map(timeFrame -> timeConstrainScore(timeFrame) + compatibilityConstraintScore(timeFrame))
+                .reduce(0.0, Double::sum);
+    }
 
+    /**
+     * @param sequence nje rresht i timeframe si array
+     * @return score-in i cili mund te jete pozitiv ose negativ varur nga penaltite qe ka marrur ky semafor ne timeframe-n perkates
+     */
+    public abstract double timeConstrainScore(boolean[] sequence);
+    private double compatibilityConstraintScore(boolean[] sequence){
+
+        return IntStream.range(0, trafficLightsConstraint.length)
+                .filter(i -> i != index)
+                .mapToObj(i -> sequence[index] ?
+                        checkCompatibilityForOpen(trafficLightsConstraint[i], sequence[i]) :
+                        checkCompatibilityForClosed(trafficLightsConstraint[i], sequence[i]))
+                .reduce(0.0, Double::sum);
+
+//        double sumPoints = 0;
+//        if(seq[index]) {
+//            for (int i = 0; i < type.length; i++) {
+//                if (index != i)
+//                    sumPoints += checkCompatibilityForOpen(type[i], seq[i]);
+//            }
+//        }
+//        else
+//            for (int i = 0; i < type.length; i++) {
+//                if(index != i)
+//                    sumPoints += checkCompatibilityForClosed(type[i], seq[i]);
+//            }
+//        System.out.println(sumPoints);
+//        return sumPoints;
+    }
+    private double checkCompatibilityForOpen(IntersectionType type, boolean affirmative){
+        int hard = 100_000;
+        int soft = 500;
+        int cool = 10;
+
+        switch (type){
+            case NEVER -> {
+                return affirmative ? - hard : cool;
+            }
+            case UNPREFERRED-> {
+                return affirmative ? - soft  : soft;
+            }
+            case ACCEPTABLE -> {
+                return affirmative ? soft : - soft;
+            }
+            case ALWAYS -> {
+                return affirmative ? cool : - hard;
+            }
+            default -> {
+                return 0;
+            }
+        }
+    }
+    private double checkCompatibilityForClosed(IntersectionType type, boolean affirmative){
+        int hard = 100_000;
+        int soft = 500;
+        int cool = 10;
+
+        switch (type){
+            case NEVER -> {
+                return affirmative ? soft : - soft;
+            }
+            case UNPREFERRED-> {
+                return affirmative ? soft : - cool;
+            }
+            case ACCEPTABLE -> {
+                return affirmative ? - soft : cool;
+            }
+            case ALWAYS -> {
+                return affirmative ? - hard : cool;
+            }
+            default -> {
+                return 0;
+            }
+        }
+    }
     public int getMinTimeGreen() {
         return minTimeGreen;
     }

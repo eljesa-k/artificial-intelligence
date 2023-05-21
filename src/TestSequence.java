@@ -1,5 +1,12 @@
 public class TestSequence {
     public static void main(String[] args) {
+
+        int MIN_TIME_GREEN = 2;
+        int MAX_TIME_RED = 3;
+        int PREF_MIN_TIME_GREEN  = 3;
+        int PREF_MAX_TIME_RED =  1;
+        int timeFrameLength = 10;
+
         boolean[][] sequence = {
                 {false, true, false},
                 {true, false, true},
@@ -16,9 +23,16 @@ public class TestSequence {
                 {IntersectionType.NEVER, IntersectionType.UNPREFERRED, IntersectionType.ALWAYS}
         };
 
-        TrafficLights[] trafficLights = new TrafficLights[3];
+        TrafficLights[] trafficLights = {
+                new VehicleTrafficLight(constraints[0], 0, true, timeFrameLength,
+                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength),
+                new VehicleTrafficLight(constraints[1], 1, true, timeFrameLength,
+                                MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength),
+                new VehicleTrafficLight(constraints[2], 2, true, timeFrameLength,
+                                MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength)
+        };
 
-        Sequence sequence1 = new Sequence(trafficLights, constraints, sequence);
+        Sequence sequence1 = new Sequence(trafficLights, sequence);
         System.out.println(sequence1.getScore());
     }
 }
