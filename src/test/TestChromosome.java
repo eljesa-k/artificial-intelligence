@@ -3,23 +3,23 @@ package test;
 import model.IntersectionType;
 import model.genetic_algorithm.Chromosome;
 import model.traffic.Sequence;
-import model.traffic.TrafficLights;
+import model.traffic.TrafficLight;
 import model.traffic.VehicleTrafficLight;
 
 public class TestChromosome{
     public static void main(String[] args) {
         IntersectionType[] intersectionTypes1 = {IntersectionType.ALWAYS, IntersectionType.NEVER};
         VehicleTrafficLight trafficLight1 = new VehicleTrafficLight(
-                intersectionTypes1, 0, true, 10, 5, 20, 8, 15, 0.8
+                intersectionTypes1, 0, true, 10, 5, 20, 8, 15
         );
 
         IntersectionType[] intersectionTypes2 = {IntersectionType.ACCEPTABLE, IntersectionType.UNPREFERRED};
         VehicleTrafficLight trafficLight2 = new VehicleTrafficLight(
-                intersectionTypes2, 1, false, 10, 3, 15, 6, 12, 0.6
+                intersectionTypes2, 1, false, 10, 3, 15, 6, 12
         );
         boolean[][] sequence = new boolean[10][2];
         Chromosome chromosome = new Chromosome(
-                new Sequence(new TrafficLights[]{trafficLight1, trafficLight2}, sequence)
+                new Sequence(new TrafficLight[]{trafficLight1, trafficLight2}, sequence)
         );
         System.out.println("Before Mutation:");
         System.out.println("Chromosome Score: " + chromosome.getScore());
@@ -39,8 +39,8 @@ public class TestChromosome{
                 {false, true, false, true, false}
         };
 
-        Chromosome parent1 = new Chromosome(new Sequence(new TrafficLights[]{trafficLight1, trafficLight2}, parent1Sequence));
-        Chromosome parent2 = new Chromosome(new Sequence(new TrafficLights[]{trafficLight1, trafficLight2}, parent2Sequence));
+        Chromosome parent1 = new Chromosome(new Sequence(new TrafficLight[]{trafficLight1, trafficLight2}, parent1Sequence));
+        Chromosome parent2 = new Chromosome(new Sequence(new TrafficLight[]{trafficLight1, trafficLight2}, parent2Sequence));
         System.out.println("Parent 1 Score: " + parent1.getScore());
         System.out.println("Parent 2 Score: " + parent2.getScore());
 
