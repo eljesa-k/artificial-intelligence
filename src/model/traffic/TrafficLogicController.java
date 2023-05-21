@@ -14,6 +14,7 @@ public class TrafficLogicController {
     private static int hard;
     private static int soft;
     private static int cool;
+    private static int allowedTimeToRun;
 
     private TrafficLogicController() {
         // Source for reading config file
@@ -26,6 +27,7 @@ public class TrafficLogicController {
 
             IntersectionType constraints[][] = new Matrix().getMatrix("matrix.csv");
             trafficLights = new TrafficLight[16];
+            allowedTimeToRun = Integer.parseInt(prop.get("allowed_time_to_run").toString());
             int time_frame = Integer.parseInt(prop.get("time_frame").toString());
             sequenceLength = Integer.parseInt(prop.get("complete_interval").toString()) / time_frame;
 
@@ -88,5 +90,11 @@ public class TrafficLogicController {
         if(trafficLights == null)
             new TrafficLogicController();
         return cool;
+    }
+
+    public static int getAllowedTimeToRun() {
+        if(trafficLights == null)
+            new TrafficLogicController();
+        return allowedTimeToRun;
     }
 }

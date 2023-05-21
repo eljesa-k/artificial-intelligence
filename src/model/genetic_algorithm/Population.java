@@ -2,6 +2,7 @@ package model.genetic_algorithm;
 
 import model.genetic_algorithm.Chromosome;
 import model.traffic.Sequence;
+import model.traffic.TrafficLogicController;
 
 import java.util.*;
 
@@ -18,6 +19,33 @@ public class Population{
         this.populationSize = populationSize;
         this.population = new ArrayList<>();
     }
+
+    public Chromosome performGeneticAlgorithm(){
+        Chromosome randomSequence = new Chromosome(new Sequence(TrafficLogicController.getTrafficLights(), new boolean[TrafficLogicController.getTrafficLights().length][TrafficLogicController.getSequenceLength()]));
+
+        PriorityQueue<Chromosome> P = initializePopulation(randomSequence, this.populationSize);
+        Chromosome best = P.peek();
+        population = new ArrayList<>(P);
+
+        int k = 1;
+        int times = TrafficLogicController.getAllowedTimeToRun();
+        while (best.getScore() != 1_000_000 && k < times){
+            PriorityQueue<Chromosome> Q = new PriorityQueue<>(populationSize, new ChromosomeComparator());
+
+            Q = performCrossover(0.5);
+            Q = performMutation(0.1, Q);
+
+            Q.addAll(P);
+            P = performSelection(Q);
+
+            best = P.peek();
+            population = new ArrayList<>(P);
+
+            System.out.println("Iterimi " + k + ": " + best.getScore());
+            k += 15;
+        }
+        return best;
+    }
     /**
      * Inicializimi i popullsisë.
      * Krijon një popullsi fillestare të përbërë nga kromozome të rastësishme.
@@ -25,11 +53,13 @@ public class Population{
      * @param sequence              Sekuenca e dritave të trafikut për të krijuar kromozome të rastësishme.
      * @param initialPopulationSize Madhësia e popullsisë fillestare.
      */
-    public void initializePopulation(Sequence sequence, int initialPopulationSize) {
+    public PriorityQueue<Chromosome> initializePopulation(Sequence sequence, int initialPopulationSize) {
+        PriorityQueue<Chromosome> P = new PriorityQueue<>(populationSize, new ChromosomeComparator());
         for (int i = 0; i < initialPopulationSize; i++) {
             Chromosome chromosome = createRandomChromosome(sequence);
-            population.add(chromosome);
+            P.add(chromosome);
         }
+        return P;
     }
     /**
      * Krijimi i kromozomit të rastësishëm.
@@ -68,8 +98,8 @@ public class Population{
      *
      * @param crossoverRate Shansi i crossover-it për çiftin e kromozomeve.
      */
-    public void performCrossover(double crossoverRate) {
-        List<Chromosome> offspring = new ArrayList<>();
+    public PriorityQueue<Chromosome> performCrossover(double crossoverRate) {
+        PriorityQueue<Chromosome> offspring = new PriorityQueue<>(populationSize, new ChromosomeComparator());
         while (offspring.size() < populationSize) {
             Chromosome parent1 = selectIndividual();
             Chromosome parent2 = selectIndividual();
@@ -82,12 +112,12 @@ public class Population{
                 offspring.add(parent2);
             }
         }
-        population = performSelection(offspring);
+        return offspring;
     }
 
 
     /**
-     * @param offspring krijohet gjenerata e re nga crossover dhe me pas thirret perfromSelection duke ja pasuar
+     * @param selectionElements krijohet gjenerata e re nga crossover dhe me pas thirret perfromSelection duke ja pasuar
      *                  listen me kromozome offspring
      *                  offspring sortohet me ane te f-onit getScore si Comparator ne PriorityQueue
      *                  prej qasaj PQ vendosen me ni AL edhe pastaj merren
@@ -96,11 +126,7 @@ public class Population{
      *                  edhe corssover e merr si popullata e re
      * @return
      */
-    public List<Chromosome> performSelection(List<Chromosome> offspring){
-        PriorityQueue<Chromosome> selectionElements = new PriorityQueue<>(populationSize, new ChromosomeComparator());
-        for (int i = 0; i < populationSize; i++) {
-            selectionElements.add(offspring.get(i));
-        }
+    public PriorityQueue<Chromosome> performSelection(PriorityQueue<Chromosome> selectionElements){
         List<Chromosome> selectedList = new ArrayList<>();
         while(selectionElements.size()>0){
             selectedList.add(selectionElements.poll());
@@ -112,7 +138,12 @@ public class Population{
         for (int i = 0; i < (int)(populationSize*0.1); i++) {
             finalSelectedList.add(selectedList.get(getRandomNumber((selectedList.size()/2), selectedList.size())));
         }
-        return finalSelectedList;
+
+        PriorityQueue<Chromosome> f = new PriorityQueue<>(populationSize, new ChromosomeComparator());
+        for (int i = 0; i < populationSize; i++) {
+            f.add(finalSelectedList.get(i));
+        }
+        return f;
     }
 
     public int getRandomNumber(int min, int max) {
@@ -120,7 +151,6 @@ public class Population{
     }
 
     class ChromosomeComparator implements Comparator<Chromosome>{
-
         @Override
         public int compare(Chromosome ch1, Chromosome ch2) {
             if(ch1.getScore() < ch2.getScore()){
@@ -140,13 +170,21 @@ public class Population{
      *
      * @param mutationRate Shansi i mutacionit për secilin kromozom.
      */
-    public void performMutation(double mutationRate) {
-        for (Chromosome chromosome : population) {
+    public PriorityQueue<Chromosome> performMutation(double mutationRate, PriorityQueue<Chromosome> q) {
+        List<Chromosome> p = new ArrayList<>(q);
+        for (int i = 0; i < p.size(); i++) {
+            Chromosome chromosome = p.get(i);
             if (Math.random() < mutationRate) {
-                Chromosome mutatedChromosome = chromosome.mutate();
-                population.set(population.indexOf(chromosome), mutatedChromosome);
+                try{
+                    Chromosome mutatedChromosome = chromosome.mutate();
+                    p.remove(chromosome);
+                    p.add(mutatedChromosome);
+                }catch (Exception ignored){}
+
+                //population.set(population.indexOf(chromosome), mutatedChromosome);
             }
         }
+        return q;
     }
     /**
      * Merr popullsinë aktuale.
@@ -179,5 +217,11 @@ public class Population{
      */
     public void setPopulationSize(int populationSize) {
         this.populationSize = populationSize;
+    }
+
+    public static void main(String[] args) {
+        Population p = new Population(20);
+
+        p.performGeneticAlgorithm();
     }
 }

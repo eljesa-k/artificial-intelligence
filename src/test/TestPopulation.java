@@ -28,16 +28,16 @@ public class TestPopulation {
                         {true, true, false}
                 }
         );
-        Population population = new Population(10);
-        population.initializePopulation(sequence, 10);
-        System.out.println("Initial Population:");
-        displayPopulation(population);
-        population.performCrossover(0.8);
-        System.out.println("\nPopulation after Crossover:");
-        displayPopulation(population);
-        population.performMutation(0.1);
-        System.out.println("\nPopulation after Mutation:");
-        displayPopulation(population);
+//        Population population = new Population(10);
+//        population.initializePopulation(sequence, 10);
+//        System.out.println("Initial Population:");
+//        displayPopulation(population);
+//        population.performCrossover(0.8);
+//        System.out.println("\nPopulation after Crossover:");
+//        displayPopulation(population);
+//        population.performMutation(0.1);
+//        System.out.println("\nPopulation after Mutation:");
+//        displayPopulation(population);
 
     }
 
