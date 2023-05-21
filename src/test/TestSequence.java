@@ -32,11 +32,11 @@ public class TestSequence {
 
         TrafficLights[] trafficLights = {
                 new VehicleTrafficLight(constraints[0], 0, true, timeFrameLength,
-                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength),
+                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED),
                 new VehicleTrafficLight(constraints[1], 1, true, timeFrameLength,
-                                MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength),
+                                MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED),
                 new VehicleTrafficLight(constraints[2], 2, true, timeFrameLength,
-                                MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength)
+                                MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED)
         };
 
         Sequence sequence1 = new Sequence(trafficLights, sequence);

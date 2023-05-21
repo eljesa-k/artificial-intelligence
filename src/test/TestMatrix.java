@@ -1,7 +1,7 @@
 package test;
 
 import model.IntersectionType;
-import model.matrix.Matrix;
+import model.traffic.constraint.constraintMatrix.Matrix;
 
 public class TestMatrix {
     public static void main(String[] args) {

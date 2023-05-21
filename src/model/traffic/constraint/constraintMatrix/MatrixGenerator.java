@@ -1,4 +1,4 @@
-package model.matrix;
+package model.traffic.constraint.constraintMatrix;
 
 import model.IntersectionType;
 
