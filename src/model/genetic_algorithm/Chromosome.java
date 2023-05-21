@@ -1,7 +1,6 @@
 package model.genetic_algorithm;
 
 import model.traffic.Sequence;
-import model.traffic.TrafficLights;
 
 import java.util.Arrays;
 import java.util.List;
