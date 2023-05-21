@@ -1,0 +1,15 @@
+Index: src/Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Test.java b/src/Test.java
+--- a/src/Test.java	
++++ b/src/Test.java	
+@@ -1,5 +1,5 @@
+ public class Test {
+     public static void main(String[] args) {
+-        TrafficLights i = new VehicleTrafficLight(true, 2, 10, new int[4], 0.3, 10);
++        TrafficLights i = new VehicleTrafficLight(true, 10, 20, 30, 60, 40, 0.4);
+     }
+ }

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4a5415e5-f241-49b6-9aa3-dc2c02785a6f" name="Changes" comment="pdf" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2OXDXqh3ljOWtbQZcuoqb0tm6pa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Desktop/Shkenca kompjuterike -4/Siguria e te dhenave/Data security&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="model.traffic.constraint" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Desktop\Shkenca kompjuterike -4\Intelegjence Artificiale\PunimeAI" />
+      <recent name="C:\Users\Lenovo\Desktop\Shkenca kompjuterike -4\Intelegjence Artificiale\PunimeAI\src" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.TrafficLogicController">
+    <configuration name="TestSequence" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TestSequence" />
+      <module name="PunimeAI" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrafficLogicController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="model.traffic.TrafficLogicController" />
+      <module name="PunimeAI" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="model.traffic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VehicleTrafficLight" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="VehicleTrafficLight" />
+      <module name="PunimeAI" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Java 3" type="LATEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory" temporary="true">
+      <texify>
+        <compiler>PDFLATEX</compiler>
+        <compiler-path />
+        <sumatra-path />
+        <pdf-viewer>NONE</pdf-viewer>
+        <viewer-command />
+        <compiler-arguments />
+        <envs />
+        <main-file>$PROJECT_DIR$/../../../Shkenca kompjuterike -2/Latex/Ushtrime/Ligjeratat/Java 3.tex</main-file>
+        <output-path>$PROJECT_DIR$/../../../Shkenca kompjuterike -2/Latex/Ushtrime/Ligjeratat</output-path>
+        <auxil-path>{projectDir}/auxil</auxil-path>
+        <compile-twice>false</compile-twice>
+        <output-format>PDF</output-format>
+        <latex-distribution>TEXLIVE</latex-distribution>
+        <has-been-run>false</has-been-run>
+        <bib-run-config>[]</bib-run-config>
+        <makeindex-run-config>[]</makeindex-run-config>
+      </texify>
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="LATEX_RUN_CONFIGURATION" factoryName="LaTeX configuration factory" temporary="true">
+      <texify>
+        <compiler>PDFLATEX</compiler>
+        <compiler-path />
+        <sumatra-path />
+        <pdf-viewer>BUILT-IN-PDF-VIEWER</pdf-viewer>
+        <viewer-command />
+        <compiler-arguments />
+        <envs />
+        <main-file>$PROJECT_DIR$/src/documentation/main.tex</main-file>
+        <output-path>$PROJECT_DIR$/out</output-path>
+        <auxil-path>{projectDir}/auxil</auxil-path>
+        <compile-twice>false</compile-twice>
+        <output-format>PDF</output-format>
+        <latex-distribution>TEXLIVE</latex-distribution>
+        <has-been-run>false</has-been-run>
+        <bib-run-config>[]</bib-run-config>
+        <makeindex-run-config>[]</makeindex-run-config>
+      </texify>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.TrafficLogicController" />
+      <item itemvalue="Application.TestSequence" />
+      <item itemvalue="Application.VehicleTrafficLight" />
+      <item itemvalue="LaTeX.Java 3" />
+      <item itemvalue="LaTeX.main" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TrafficLogicController" />
+        <item itemvalue="LaTeX.Java 3" />
+        <item itemvalue="LaTeX.main" />
+        <item itemvalue="Application.TestSequence" />
+        <item itemvalue="Application.VehicleTrafficLight" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4a5415e5-f241-49b6-9aa3-dc2c02785a6f" name="Changes" comment="" />
+      <created>1681698075543</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1681698075543</updated>
+      <workItem from="1681698077302" duration="3318000" />
+      <workItem from="1681755329523" duration="7000" />
+      <workItem from="1681755350707" duration="13000" />
+      <workItem from="1681755738455" duration="973000" />
+      <workItem from="1681864159378" duration="4559000" />
+      <workItem from="1681905920474" duration="2420000" />
+      <workItem from="1681912256681" duration="5158000" />
+      <workItem from="1682255445583" duration="326000" />
+      <workItem from="1682503597580" duration="377000" />
+      <workItem from="1682505153096" duration="18000" />
+      <workItem from="1684543591466" duration="4969000" />
+      <workItem from="1684585959665" duration="29166000" />
+      <workItem from="1684659216085" duration="8271000" />
+    </task>
+    <task id="LOCAL-00001" summary="Implementing 8 puzzle">
+      <created>1681918522190</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681918522190</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Printing solution">
+      <created>1681920767481</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1681920767481</updated>
+    </task>
+    <task id="LOCAL-00003" summary="updated git ignore">
+      <created>1684543737043</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1684543737043</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Sequence class, Node interface and IntersectionType structure">
+      <created>1684547413058</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1684547413058</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Adding priority feature">
+      <created>1684587950015</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1684587950015</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Calculate sequence score, green lights constraint check">
+      <created>1684623608790</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1684623608790</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Refactoring sequence score logic">
+      <created>1684631522339</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1684631522339</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added config file and TrafficLogicController to create TrafficLights based on config">
+      <created>1684666389104</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684666389104</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactoring TrafficLight class to read constraint penalty from config file">
+      <created>1684667510711</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1684667510711</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Bug fix">
+      <created>1684667550401</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1684667550401</updated>
+    </task>
+    <task id="LOCAL-00011" summary="pdf">
+      <created>1684667882330</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1684667882330</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Created informed graph class" />
+    <MESSAGE value="Implementing 8 puzzle" />
+    <MESSAGE value="Printing solution" />
+    <MESSAGE value="updated git ignore" />
+    <MESSAGE value="Sequence class, Node interface and IntersectionType structure" />
+    <MESSAGE value="Adding priority feature" />
+    <MESSAGE value="Calculate sequence score, green lights constraint check" />
+    <MESSAGE value="Refactoring sequence score logic" />
+    <MESSAGE value="Added config file and TrafficLogicController to create TrafficLights based on config" />
+    <MESSAGE value="Refactoring TrafficLight class to read constraint penalty from config file" />
+    <MESSAGE value="Bug fix" />
+    <MESSAGE value="pdf" />
+    <option name="LAST_COMMIT_MESSAGE" value="pdf" />
+  </component>
+</project>
