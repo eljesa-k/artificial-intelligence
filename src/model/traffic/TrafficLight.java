@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public abstract class TrafficLights {
+public abstract class TrafficLight {
     public boolean isGreen;
     private int timeFrame;
     private double priority;
@@ -18,6 +18,16 @@ public abstract class TrafficLights {
     protected int prefMinTimeGreen;
     protected int prefMaxTimeRed;
 
+    protected int hard;
+    protected int soft;
+    protected int cool;
+    {
+        hard = TrafficLogicController.getHard();
+        soft = TrafficLogicController.getSoft();
+        cool = TrafficLogicController.getCool();
+
+    }
+
     /**
      * @param isGreen          tregon a eshte i hapur per kalim apo jo semafori perkates
      * @param timeFrameLength  in seconds psh 10 sek ni frame mu kon i gjate
@@ -26,8 +36,8 @@ public abstract class TrafficLights {
      * @param prefMinTimeGreen numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i hapur
      * @param prefMaxTimeRed   numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i mbyllur
      */
-    public TrafficLights(IntersectionType[] trafficLightsConstraint, int index, boolean isGreen, int timeFrameLength,
-                         int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed) {
+    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index, boolean isGreen, int timeFrameLength,
+                        int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed) {
         this.priority = 1;
         this.index = index;
         this.isGreen = isGreen;
@@ -40,9 +50,9 @@ public abstract class TrafficLights {
 
     }
 
-    public TrafficLights(IntersectionType[] trafficLightsConstraint, int index,
-                         boolean isGreen, int timeFrame, double priority, int minTimeGreen, int maxTimeRed,
-                         int prefMinTimeGreen, int prefMaxTimeRed) {
+    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index,
+                        boolean isGreen, int timeFrame, double priority, int minTimeGreen, int maxTimeRed,
+                        int prefMinTimeGreen, int prefMaxTimeRed) {
         this.trafficLightsConstraint = trafficLightsConstraint;
         this.index = index;
         this.isGreen = isGreen;
@@ -158,10 +168,6 @@ public abstract class TrafficLights {
 //        return sumPoints;
     }
     private double checkCompatibilityForOpen(IntersectionType type, boolean affirmative){
-        int hard = 100_000;
-        int soft = 500;
-        int cool = 10;
-
         switch (type){
             case NEVER -> {
                 return affirmative ? - hard : cool;
@@ -181,10 +187,6 @@ public abstract class TrafficLights {
         }
     }
     private double checkCompatibilityForClosed(IntersectionType type, boolean affirmative){
-        int hard = 100_000;
-        int soft = 500;
-        int cool = 10;
-
         switch (type){
             case NEVER -> {
                 return affirmative ? soft : - soft;

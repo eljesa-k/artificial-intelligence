@@ -4,7 +4,7 @@ import model.IntersectionType;
 import model.genetic_algorithm.Chromosome;
 import model.genetic_algorithm.Population;
 import model.traffic.Sequence;
-import model.traffic.TrafficLights;
+import model.traffic.TrafficLight;
 import model.traffic.VehicleTrafficLight;
 
 public class TestPopulation {
@@ -12,16 +12,16 @@ public class TestPopulation {
         // Create a sample sequence
         IntersectionType[] intersectionTypes1 = {IntersectionType.ALWAYS, IntersectionType.NEVER};
         VehicleTrafficLight trafficLight1 = new VehicleTrafficLight(
-                intersectionTypes1, 0, true, 10, 5, 20, 8, 15, 0.8
+                intersectionTypes1, 0, true, 10, 5, 20, 8, 15
         );
 
         IntersectionType[] intersectionTypes2 = {IntersectionType.ACCEPTABLE, IntersectionType.UNPREFERRED};
         VehicleTrafficLight trafficLight2 = new VehicleTrafficLight(
-                intersectionTypes2, 1, false, 10, 3, 15, 6, 12, 0.6
+                intersectionTypes2, 1, false, 10, 3, 15, 6, 12
         );
         boolean[][] sequenceE = new boolean[10][2];
         Sequence sequence = new Sequence(
-                new TrafficLights[]{trafficLight1, trafficLight2},
+                new TrafficLight[]{trafficLight1, trafficLight2},
                 new boolean[][]{
                         {true, false, true},
                         {false, true, false},

@@ -1,7 +1,7 @@
 package test;
 
 import model.IntersectionType;
-import model.traffic.TrafficLights;
+import model.traffic.TrafficLight;
 import model.traffic.VehicleTrafficLight;
 
 public class TestVehicleTimeConstrainScore {
@@ -21,13 +21,13 @@ public class TestVehicleTimeConstrainScore {
                 {IntersectionType.NEVER, IntersectionType.UNPREFERRED, IntersectionType.ALWAYS}
         };
 
-        TrafficLights[] trafficLights = {
+        TrafficLight[] trafficLights = {
                 new VehicleTrafficLight(constraints[0], 0, true, timeFrameLength,
-                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength),
+                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED),
                 new VehicleTrafficLight(constraints[1], 1, true, timeFrameLength,
-                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength),
+                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED),
                 new VehicleTrafficLight(constraints[2], 2, true, timeFrameLength,
-                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED, timeFrameLength)
+                        MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED)
         };
         boolean[][] sequence = {
                 {false, true, false},

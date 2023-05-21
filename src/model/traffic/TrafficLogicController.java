@@ -9,17 +9,23 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class TrafficLogicController {
-    private TrafficLights[] trafficLights;
-    private int sequenceLength;
+    private static TrafficLight[] trafficLights;
+    private static int sequenceLength;
+    private static int hard;
+    private static int soft;
+    private static int cool;
 
-    public TrafficLogicController() {
+    private TrafficLogicController() {
+        // Source for reading config file
+        // https://stackoverflow.com/questions/16273174/how-to-read-a-configuration-file-in-java
+
         Properties prop = new Properties();
         String fileName = "app.config";
         try (FileInputStream fis = new FileInputStream(fileName)) {
             prop.load(fis);
 
             IntersectionType constraints[][] = new Matrix().getMatrix("matrix.csv");
-            trafficLights = new TrafficLights[16];
+            trafficLights = new TrafficLight[16];
             int time_frame = Integer.parseInt(prop.get("time_frame").toString());
             sequenceLength = Integer.parseInt(prop.get("complete_interval").toString()) / time_frame;
 
@@ -33,6 +39,9 @@ public class TrafficLogicController {
             int preferred_time_green_pedestrian  = Integer.parseInt(prop.get("preferred_time_green_pedestrian").toString());
             int preferred_time_red_pedestrian  = Integer.parseInt(prop.get("preferred_time_red_pedestrian").toString());
 
+            hard = Integer.parseInt(prop.get("hard_constraint_penallty").toString());
+            soft = Integer.parseInt(prop.get("soft_constraint_penallty").toString());
+            cool = Integer.parseInt(prop.get("cool_constraint_penallty").toString());
 
             for (int i = 0; i < 12; i++) {
                 trafficLights[i] = new VehicleTrafficLight(constraints[i], i, false,time_frame,
@@ -42,16 +51,42 @@ public class TrafficLogicController {
                 trafficLights[i] = new PedestrianTrafficLight(constraints[i], i, false,time_frame,
                         min_time_green_pedestrian, max_time_red_pedestrian, preferred_time_green_pedestrian, preferred_time_red_pedestrian);
             }
-        } catch (FileNotFoundException ex) {System.out.println(ex); }
-          catch (IOException ex) {}
+        }
+        catch (FileNotFoundException ex) {
+            System.out.println(ex); }
+        catch (IOException ex) {
+              System.out.println(ex);
+        }
 
     }
 
-    public TrafficLights[] getTrafficLights() {
+    public static TrafficLight[] getTrafficLights() {
+        if(trafficLights == null)
+            new TrafficLogicController();
         return trafficLights;
     }
 
-    public int getSequenceLength() {
+    public static int getSequenceLength() {
+        if(trafficLights == null)
+            new TrafficLogicController();
         return sequenceLength;
+    }
+
+    public static int getHard() {
+        if(trafficLights == null)
+            new TrafficLogicController();
+        return hard;
+    }
+
+    public static int getSoft() {
+        if(trafficLights == null)
+            new TrafficLogicController();
+        return soft;
+    }
+
+    public static int getCool() {
+        if(trafficLights == null)
+            new TrafficLogicController();
+        return cool;
     }
 }

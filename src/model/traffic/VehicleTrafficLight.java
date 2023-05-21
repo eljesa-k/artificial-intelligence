@@ -2,9 +2,7 @@ package model.traffic;
 
 import model.IntersectionType;
 
-import java.util.ArrayList;
-
-public class VehicleTrafficLight extends TrafficLights {
+public class VehicleTrafficLight extends TrafficLight {
 
     private double trafficCoeff;
 

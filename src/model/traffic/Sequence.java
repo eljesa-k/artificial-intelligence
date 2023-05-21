@@ -1,12 +1,9 @@
 package model.traffic;
 
-import model.traffic.Node;
-import model.traffic.TrafficLights;
-
 import java.util.Arrays;
 
 public class Sequence implements Node {
-    TrafficLights[] trafficLights;
+    TrafficLight[] trafficLights;
     private boolean[][] sequence;
     private double score;
 
@@ -15,7 +12,7 @@ public class Sequence implements Node {
      * @param trafficLights vargu i semaforeve
      * @param sequence vargu i gjendjeve te semaforeve ne secilin interval kohor
      */
-    public Sequence(TrafficLights[] trafficLights, boolean[][] sequence) {
+    public Sequence(TrafficLight[] trafficLights, boolean[][] sequence) {
         this.trafficLights = trafficLights;
         this.sequence = sequence;
 
@@ -45,7 +42,7 @@ public class Sequence implements Node {
         return sequence;
     }
 
-    public TrafficLights[] getTrafficLights() {
+    public TrafficLight[] getTrafficLights() {
         return trafficLights;
     }
 }
