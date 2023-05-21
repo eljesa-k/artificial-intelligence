@@ -16,7 +16,7 @@ public class VehicleTrafficLight extends TrafficLight {
      */
     public VehicleTrafficLight(IntersectionType[] trafficLightsConstraint, int index, boolean isGreen, int timeFrame, int MIN_TIME_GREEN, int MAX_TIME_RED, int PREF_MIN_TIME_GREEN, int PREF_MAX_TIME_RED) {
         super(trafficLightsConstraint, index,isGreen, timeFrame, MIN_TIME_GREEN, MAX_TIME_RED, PREF_MIN_TIME_GREEN, PREF_MAX_TIME_RED);
-        this.trafficCoeff = trafficCoeff;
+        this.trafficCoeff = 1;
     }
     /**
      * @param isGreen
