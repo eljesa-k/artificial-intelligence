@@ -38,12 +38,14 @@ public class TestPopulation {
         population.performMutation(0.1);
         System.out.println("\nPopulation after Mutation:");
         displayPopulation(population);
+
     }
+
 
     private static void displayPopulation(Population population) {
         for (int i = 0; i < population.getPopulation().size(); i++) {
             Chromosome chromosome = population.getPopulation().get(i);
-            System.out.println("Chromosome " + i + ": " + chromosome);
+            System.out.println("Chromosome " + i + ": \n " + chromosome + " \nchromosome score: " + chromosome.getScore());
         }
     }
 }
