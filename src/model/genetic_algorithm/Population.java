@@ -4,11 +4,18 @@ import model.genetic_algorithm.Chromosome;
 import model.traffic.Sequence;
 import model.traffic.TrafficLogicController;
 
+import javax.swing.*;
+import javax.swing.Timer;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Population{
     private List<Chromosome> population;
     private int populationSize;
+    private JFrame frame;
+    private JPanel panel;
+    private JLabel timerLabel;
     /**
      * Konstruktori i klasës Population.
      * Krijon një popullsi të re me madhësinë e caktuar.
@@ -36,6 +43,28 @@ public class Population{
         int i = 0;
         Date start_time = new Date();
         int timeToRun = TrafficLogicController.getAllowedTimeToRun() * 1000;
+        frame = new JFrame("Algoritmi Gjenetik");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+
+        timerLabel = new JLabel();
+        panel.add(timerLabel, BorderLayout.NORTH);
+
+        JTextArea outputArea = new JTextArea();
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        frame.getContentPane().add(panel);
+        frame.setSize(400, 400);
+        frame.setVisible(true);
+
+        Timer timer = new Timer(1000, e -> {
+            long elapsedTime = (new Date().getTime() - start_time.getTime()) / 1000;
+            timerLabel.setText("Koha e kaluar: " + elapsedTime + " sekonda");
+        });
+        timer.start();
         while (best.getScore() < 1_000_000 && k < timeToRun){
             PriorityQueue<Chromosome> Q = new PriorityQueue<>(populationSize, new ChromosomeComparator());
 
@@ -48,7 +77,7 @@ public class Population{
             best = P.peek();
             population = new ArrayList<>(P);
 
-            System.out.println("Iterimi " + i + ": " + best.getScore());
+            outputArea.append("Iterimi " + i + ": " + best.getScore() + "\n");
             k = (int)(new Date().getTime() - start_time.getTime());
             i++;
         }
