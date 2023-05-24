@@ -65,7 +65,7 @@ public class Population{
             timerLabel.setText("Koha e kaluar: " + elapsedTime + " sekonda");
         });
         timer.start();
-        while (best.getScore() < 1_000_000 && k < timeToRun){
+        while (best.getScore() < 1_000_000 && k < timeToRun){ //k<timeToRun
             PriorityQueue<Chromosome> Q = new PriorityQueue<>(populationSize, new ChromosomeComparator());
 
             Q = performCrossover(0.5);
@@ -81,7 +81,45 @@ public class Population{
             k = (int)(new Date().getTime() - start_time.getTime());
             i++;
         }
+        frame.repaint();
+        displaySequenceTable(best.getSequence());
+        //outputArea.append("Zgjidhja e gjetur: \n" + printSequence(best.getSequence()));
         return best;
+    }
+
+    private void displaySequenceTable(boolean[][] seq) {
+        // Create the table model with sequence data
+        String[] columnNames = new String[seq[0].length + 1];
+        columnNames[0] = ""; // Empty space for row labels
+        for (int i = 0; i < seq[0].length; i++) {
+            columnNames[i + 1] = "frame-" + (i + 1);
+        }
+
+        String[][] rowData = new String[seq.length][seq[0].length + 1];
+        for (int i = 0; i < seq.length; i++) {
+            rowData[i][0] = "S-" + (i + 1);
+            for (int j = 0; j < seq[i].length; j++) {
+                rowData[i][j + 1] = seq[i][j] ? "true" : "false";
+            }
+        }
+
+        // Create the JTable
+        JTable table = new JTable(rowData, columnNames);
+        table.setRowHeight(25);
+
+        // Set the preferred size of the table based on its contents
+        int tableWidth = table.getPreferredSize().width;
+        int tableHeight = table.getPreferredSize().height;
+        table.setPreferredScrollableViewportSize(new Dimension(tableWidth, tableHeight));
+
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        panel.removeAll();
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        // Refresh the frame to display the table
+        frame.pack();
+        frame.repaint();
     }
     /**
      * Inicializimi i popullsisë.
