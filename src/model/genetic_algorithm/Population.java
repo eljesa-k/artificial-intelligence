@@ -84,6 +84,7 @@ public class Population{
         frame.repaint();
         displaySequenceTable(best.getSequence());
         //outputArea.append("Zgjidhja e gjetur: \n" + printSequence(best.getSequence()));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return best;
     }
 

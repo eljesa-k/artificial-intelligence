@@ -31,7 +31,7 @@ public class TrafficLogicController {
         try (FileInputStream fis = new FileInputStream(fileName)) {
             prop.load(fis);
 
-            IntersectionType constraints[][] = new Matrix().getMatrix("matrix.csv");
+            IntersectionType constraints[][] = new Matrix().getMatrix("udhekryqi-fshmn.csv");
             double[] trafficCoefficients = new TrafficCoefficient().getValuesFromFile("random_numbers.csv");
             trafficLights = new TrafficLight[16];
             allowedTimeToRun = Integer.parseInt(prop.get("allowed_time_to_run").toString());
