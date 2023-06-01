@@ -121,24 +121,24 @@ public abstract class TrafficLight {
 
         for (int i = 0; i < opened.size(); i++) {
             if(opened.get(i)<minTimeGreen){
-                score+=-50000;
+                score+=-hard;
             }
             if(minTimeGreen<=opened.get(i) && opened.get(i)<prefMinTimeGreen){
-                score+=500;
+                score+=cool;
             }
             if(opened.get(i)>=prefMinTimeGreen){
-                score+=1000;
+                score+=soft;
             }
         }
         for (int i = 0; i < closed.size(); i++) {
             if(closed.get(i)>maxTimeRed){
-                score+=-50000;
+                score+=-hard;
             }
             if(prefMaxTimeRed<closed.get(i) && closed.get(i)<=maxTimeRed){
-                score+=500;
+                score+=cool;
             }
             if(closed.get(i)<=prefMaxTimeRed) {
-                score += 1000;
+                score += soft;
             }
         }
         return score;
@@ -176,7 +176,7 @@ public abstract class TrafficLight {
                 return affirmative ? - soft  : soft;
             }
             case ACCEPTABLE -> {
-                return affirmative ? soft : - soft;
+                return affirmative ? soft : - cool;
             }
             case ALWAYS -> {
                 return affirmative ? cool : - hard;
@@ -195,7 +195,7 @@ public abstract class TrafficLight {
                 return affirmative ? soft : - cool;
             }
             case ACCEPTABLE -> {
-                return affirmative ? - soft : cool;
+                return affirmative ? - cool : cool;
             }
             case ALWAYS -> {
                 return affirmative ? - hard : cool;

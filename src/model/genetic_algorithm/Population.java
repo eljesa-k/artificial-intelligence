@@ -1,29 +1,37 @@
 package model.genetic_algorithm;
 
-import model.genetic_algorithm.Chromosome;
 import model.traffic.Sequence;
 import model.traffic.TrafficLogicController;
+import view.OutputFrame;
 
-import javax.swing.*;
-import javax.swing.Timer;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
 public class Population{
     private List<Chromosome> population;
     private int populationSize;
-    private JFrame frame;
-    private JPanel panel;
-    private JLabel timerLabel;
+    double mutationRate;
+    double selectionRate;
+    OutputFrame frame;
+
     /**
      * Konstruktori i klasës Population.
      * Krijon një popullsi të re me madhësinë e caktuar.
      *
      * @param populationSize Madhësia e popullsisë.
      */
-    public Population(int populationSize) {
+    public Population(int populationSize, OutputFrame f) {
         this.populationSize = populationSize;
+        this.mutationRate = 0.1;
+        this.selectionRate = 0.1;
+        this.population = new ArrayList<>();
+        this.frame = f;
+    }
+
+    public Population(int populationSize, double mutationRate, double selectionRate) {
+        this.populationSize = populationSize;
+        this.mutationRate = mutationRate;
+        this.selectionRate = selectionRate;
         this.population = new ArrayList<>();
     }
 
@@ -42,34 +50,16 @@ public class Population{
         int k = 0;
         int i = 0;
         Date start_time = new Date();
+        this.frame.setStartTime(start_time);
         int timeToRun = TrafficLogicController.getAllowedTimeToRun() * 1000;
-        frame = new JFrame("Algoritmi Gjenetik");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
 
-        timerLabel = new JLabel();
-        panel.add(timerLabel, BorderLayout.NORTH);
 
-        JTextArea outputArea = new JTextArea();
-        JScrollPane scrollPane = new JScrollPane(outputArea);
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        frame.getContentPane().add(panel);
-        frame.setSize(400, 400);
-        frame.setVisible(true);
-
-        Timer timer = new Timer(1000, e -> {
-            long elapsedTime = (new Date().getTime() - start_time.getTime()) / 1000;
-            timerLabel.setText("Koha e kaluar: " + elapsedTime + " sekonda");
-        });
-        timer.start();
         while (best.getScore() < 1_000_000 && k < timeToRun){ //k<timeToRun
             PriorityQueue<Chromosome> Q = new PriorityQueue<>(populationSize, new ChromosomeComparator());
 
             Q = performCrossover(0.5);
-            Q = performMutation(0.1, Q);
+            Q = performMutation(mutationRate, Q);
 
             Q.addAll(P);
             P = performSelection(Q);
@@ -77,51 +67,18 @@ public class Population{
             best = P.peek();
             population = new ArrayList<>(P);
 
-            outputArea.append("Iterimi " + i + ": " + best.getScore() + "\n");
+
+            frame.appendNewLine(i, best.getScore());
             k = (int)(new Date().getTime() - start_time.getTime());
             i++;
         }
         frame.repaint();
-        displaySequenceTable(best.getSequence());
+        frame.displaySequenceTable(best.getSequence());
         //outputArea.append("Zgjidhja e gjetur: \n" + printSequence(best.getSequence()));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return best;
     }
 
-    private void displaySequenceTable(boolean[][] seq) {
-        // Create the table model with sequence data
-        String[] columnNames = new String[seq[0].length + 1];
-        columnNames[0] = ""; // Empty space for row labels
-        for (int i = 0; i < seq[0].length; i++) {
-            columnNames[i + 1] = "frame-" + (i + 1);
-        }
 
-        String[][] rowData = new String[seq.length][seq[0].length + 1];
-        for (int i = 0; i < seq.length; i++) {
-            rowData[i][0] = "S-" + (i + 1);
-            for (int j = 0; j < seq[i].length; j++) {
-                rowData[i][j + 1] = seq[i][j] ? "true" : "false";
-            }
-        }
-
-        // Create the JTable
-        JTable table = new JTable(rowData, columnNames);
-        table.setRowHeight(25);
-
-        // Set the preferred size of the table based on its contents
-        int tableWidth = table.getPreferredSize().width;
-        int tableHeight = table.getPreferredSize().height;
-        table.setPreferredScrollableViewportSize(new Dimension(tableWidth, tableHeight));
-
-        // Add the table to a scroll pane
-        JScrollPane scrollPane = new JScrollPane(table);
-        panel.removeAll();
-        panel.add(scrollPane, BorderLayout.CENTER);
-
-        // Refresh the frame to display the table
-        frame.pack();
-        frame.repaint();
-    }
     /**
      * Inicializimi i popullsisë.
      * Krijon një popullsi fillestare të përbërë nga kromozome të rastësishme.
@@ -208,10 +165,10 @@ public class Population{
             selectedList.add(selectionElements.poll());
         }
         List<Chromosome> finalSelectedList = new ArrayList<>();
-        for (int i = 0; i < (int)(populationSize*0.9); i++) {
+        for (int i = 0; i < (int)(populationSize*(1-selectionRate)); i++) {
             finalSelectedList.add(selectedList.get(getRandomNumber(0,(selectedList.size()/2))));
         }
-        for (int i = 0; i < (int)(populationSize*0.1); i++) {
+        for (int i = 0; i < (int)(populationSize*selectionRate); i++) {
             finalSelectedList.add(selectedList.get(getRandomNumber((selectedList.size()/2), selectedList.size())));
         }
 
@@ -313,8 +270,9 @@ public class Population{
     }
 
     public static void main(String[] args) {
-        Population p = new Population(30);
+        OutputFrame frame = new OutputFrame();
+        Population p = new Population(500, frame);
 
-        p.performGeneticAlgorithm();
+        System.out.println(p.performGeneticAlgorithm().getScore());
     }
 }

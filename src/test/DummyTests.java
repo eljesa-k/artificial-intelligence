@@ -4,8 +4,8 @@ import java.util.stream.IntStream;
 
 public class DummyTests {
     public static void main(String[] args) {
-        int[] a = {1, 2, 3, 4, 5};
-        int[] b = {2, 2, 2, 2, 2};
+//        int[] a = {1, 2, 3, 4, 5};
+//        int[] b = {2, 2, 2, 2, 2};
 
 
 //        int sum = Arrays.stream(a).reduce(0, (subtotal, element) -> subtotal + element);
@@ -36,9 +36,9 @@ public class DummyTests {
 //                .mapToObj(index -> String.format("%d -> %s", index, array[index]))
 //                .forEach(System.out::println);
 
-        int s = IntStream.range(0, a.length)
-                .mapToObj(i -> 2 * i )
-                .reduce(0, Integer::sum);
-        System.out.println(s);
+//        int s = IntStream.range(0, a.length)
+//                .mapToObj(i -> 2 * i )
+//                .reduce(0, Integer::sum);
+//        System.out.println(s);
     }
 }
