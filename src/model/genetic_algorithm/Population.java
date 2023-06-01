@@ -2,6 +2,7 @@ package model.genetic_algorithm;
 
 import model.traffic.Sequence;
 import model.traffic.TrafficLogicController;
+import view.DrawingFrame;
 import view.OutputFrame;
 
 import java.util.*;
@@ -22,7 +23,7 @@ public class Population{
      */
     public Population(int populationSize, OutputFrame f) {
         this.populationSize = populationSize;
-        this.mutationRate = 0.1;
+        this.mutationRate = 0.01;
         this.selectionRate = 0.1;
         this.population = new ArrayList<>();
         this.frame = f;
@@ -270,8 +271,8 @@ public class Population{
     }
 
     public static void main(String[] args) {
-        OutputFrame frame = new OutputFrame();
-        Population p = new Population(500, frame);
+        OutputFrame frame = new DrawingFrame();
+        Population p = new Population(300, frame);
 
         System.out.println(p.performGeneticAlgorithm().getScore());
     }

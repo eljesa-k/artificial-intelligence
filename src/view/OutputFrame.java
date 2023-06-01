@@ -5,11 +5,11 @@ import java.awt.*;
 import java.util.Date;
 
 public class OutputFrame extends JFrame{
-    private JPanel panel;
-    private JLabel timerLabel;
+    protected JPanel panel;
     JTextArea outputArea = new JTextArea();
     JScrollPane scrollPane = new JScrollPane(outputArea);
     Date start_time;
+    protected boolean stillRunning = true;
     public OutputFrame(){
                 super("Algoritmi Gjenetik");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,8 +17,9 @@ public class OutputFrame extends JFrame{
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        timerLabel = new JLabel();
+        JLabel timerLabel = new JLabel("Koha e kaluar: 0 sekonda");
         panel.add(timerLabel, BorderLayout.NORTH);
+
 
         panel.add(scrollPane, BorderLayout.CENTER);
 
@@ -27,13 +28,19 @@ public class OutputFrame extends JFrame{
         setVisible(true);
 
         Timer timer = new Timer(1000, e -> {
-            long elapsedTime = (new Date().getTime() - start_time.getTime()) / 1000;
-            timerLabel.setText("Koha e kaluar: " + elapsedTime + " sekonda");
+            if(stillRunning){
+                long elapsedTime = (new Date().getTime() - start_time.getTime()) / 1000;
+                timerLabel.setText("Koha e kaluar: " + (elapsedTime + 1) + " sekonda");
+            }
+
         });
         timer.start();
     }
     public void appendNewLine(int i, double score){
+
         outputArea.append("Iterimi " + i + ": " + score + "\n");
+        JScrollBar vertical = scrollPane.getVerticalScrollBar();
+        vertical.setValue( vertical.getMaximum() );
     }
     public void displaySequenceTable(boolean[][] seq) {
         // Create the table model with sequence data

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class TrafficCoefficient {
     double[] values ;
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        String filePath = "random_numbers.csv";
 //        int numberOfNumbers = 12;
 //
@@ -18,15 +18,14 @@ public class TrafficCoefficient {
 //            System.out.println("An error occurred while generating the CSV file.");
 //            e.printStackTrace();
 //        }
-
-        String filePath = "random_numbers.csv";
-        TrafficCoefficient trafficCoefficient = new TrafficCoefficient();
-        double[] values = trafficCoefficient.getValuesFromFile(filePath);
-        System.out.println("Values from the file:");
-        for (double value : values) {
-            System.out.println(value);
-        }
-    }
+//        String filePath = "random_numbers.csv";
+//        TrafficCoefficient trafficCoefficient = new TrafficCoefficient();
+//        double[] values = trafficCoefficient.getValuesFromFile(filePath);
+//        System.out.println("Values from the file:");
+//        for (double value : values) {
+//            System.out.println(value);
+//        }
+//    }
     /**
      * Lexon vlerat nga një file CSV dhe i kthen si një varg me vlera të tipit double.
      *

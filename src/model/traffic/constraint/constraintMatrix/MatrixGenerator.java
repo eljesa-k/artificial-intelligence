@@ -77,7 +77,7 @@ public class MatrixGenerator {
         }
     }
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
 //        String fileName = "matrix.csv";
 //        int size = 16;
 //        generateSymmetricCSV(fileName, size);
@@ -87,6 +87,6 @@ public class MatrixGenerator {
 //        int size = 16;
 //        generateNonSymmetricCSV(fileName, size);
 //        System.out.println("CSV file generated: " + fileName);
-    }
+//    }
 }
 
