@@ -7,6 +7,8 @@ import model.traffic.constraint.constraintMatrix.Matrix;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 public class TrafficLogicController {
@@ -16,6 +18,7 @@ public class TrafficLogicController {
     private static int soft;
     private static int cool;
     private static int allowedTimeToRun;
+    private static Map<String, Integer> timeConfig;
 
     /**
      * Reads all the config and constraints and creates traffic light instances
@@ -39,27 +42,27 @@ public class TrafficLogicController {
             // TODO: nese e perdorim /time_frame kontrolloje kohen minimale
             sequenceLength = Integer.parseInt(prop.get("complete_interval").toString()) / time_frame;
 
-            int min_time_green_vehicle  = Integer.parseInt(prop.get("min_time_green_vehicle").toString());
-            int max_time_red_vehicle  = Integer.parseInt(prop.get("max_time_red_vehicle").toString());
-            int preferred_time_green_vehicle  = Integer.parseInt(prop.get("preferred_time_green_vehicle").toString());
-            int preferred_time_red_vehicle  = Integer.parseInt(prop.get("preferred_time_red_vehicle").toString());
+            timeConfig = new HashMap<>();
+            timeConfig.put("min_time_green_vehicle", Integer.parseInt(prop.get("min_time_green_vehicle").toString()));
+            timeConfig.put("max_time_red_vehicle",Integer.parseInt(prop.get("max_time_red_vehicle").toString()));
+            timeConfig.put("preferred_time_green_vehicle",Integer.parseInt(prop.get("preferred_time_green_vehicle").toString()));
+            timeConfig.put("preferred_time_red_vehicle",Integer.parseInt(prop.get("preferred_time_red_vehicle").toString()));
 
-            int min_time_green_pedestrian  = Integer.parseInt(prop.get("min_time_green_pedestrian").toString());
-            int max_time_red_pedestrian  = Integer.parseInt(prop.get("max_time_red_pedestrian").toString());
-            int preferred_time_green_pedestrian  = Integer.parseInt(prop.get("preferred_time_green_pedestrian").toString());
-            int preferred_time_red_pedestrian  = Integer.parseInt(prop.get("preferred_time_red_pedestrian").toString());
+            timeConfig.put("min_time_green_pedestrian",Integer.parseInt(prop.get("min_time_green_pedestrian").toString()));
+            timeConfig.put("max_time_red_pedestrian",Integer.parseInt(prop.get("max_time_red_pedestrian").toString()));
+            timeConfig.put("preferred_time_green_pedestrian",Integer.parseInt(prop.get("preferred_time_green_pedestrian").toString()));
+            timeConfig.put("preferred_time_red_pedestrian",Integer.parseInt(prop.get("preferred_time_red_pedestrian").toString()));
+
 
             hard = Integer.parseInt(prop.get("hard_constraint_penallty").toString());
             soft = Integer.parseInt(prop.get("soft_constraint_penallty").toString());
             cool = Integer.parseInt(prop.get("cool_constraint_penallty").toString());
 
             for (int i = 0; i < 12; i++) {
-                trafficLights[i] = new VehicleTrafficLight(constraints[i], i,time_frame,0.1,
-                                                            min_time_green_vehicle, max_time_red_vehicle, preferred_time_green_vehicle, preferred_time_red_vehicle, trafficCoefficients[i]);
+                trafficLights[i] = new VehicleTrafficLight(constraints[i], i, time_frame, trafficCoefficients[i]);
             }
             for (int i = 12; i < 16; i++) {
-                trafficLights[i] = new PedestrianTrafficLight(constraints[i], i,time_frame,
-                        min_time_green_pedestrian, max_time_red_pedestrian, preferred_time_green_pedestrian, preferred_time_red_pedestrian);
+                trafficLights[i] = new PedestrianTrafficLight(constraints[i], i, time_frame);
             }
         }
         catch (FileNotFoundException ex) {
@@ -104,5 +107,11 @@ public class TrafficLogicController {
         if(trafficLights == null)
             new TrafficLogicController();
         return allowedTimeToRun;
+    }
+
+    public static Map<String, Integer> getTimeConfig(){
+        if(trafficLights == null)
+            new TrafficLogicController();
+        return timeConfig;
     }
 }

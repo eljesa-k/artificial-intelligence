@@ -2,6 +2,8 @@ package model.traffic;
 
 import model.IntersectionType;
 
+import java.util.Map;
+
 public class VehicleTrafficLight extends TrafficLight {
 
     private double trafficCoeff;
@@ -30,6 +32,16 @@ public class VehicleTrafficLight extends TrafficLight {
         this.trafficCoeff = trafficCoeff;
     }
 
+    public VehicleTrafficLight(IntersectionType[] trafficLightsConstraint, int index, int timeFrame, double trafficCoeff) {
+        super(trafficLightsConstraint, index, timeFrame);
+        this.trafficCoeff = trafficCoeff;
+
+        Map<String, Integer> timeConfig = TrafficLogicController.getTimeConfig();
+        this.minTimeGreen = timeConfig.get("min_time_green_vehicle");
+        this.maxTimeRed = timeConfig.get("max_time_red_vehicle");
+        this.prefMinTimeGreen = timeConfig.get("preferred_time_green_vehicle");
+        this.prefMaxTimeRed = timeConfig.get("preferred_time_red_vehicle");
+    }
     @Override
     public double getScore(boolean[][] sequence) {
         return super.getScore(sequence) * trafficCoeff;

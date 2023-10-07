@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public abstract class TrafficLight {
-    public boolean isGreen;
     private int timeFrame;
     private double priority;
     private IntersectionType[] trafficLightsConstraint;
@@ -25,22 +24,19 @@ public abstract class TrafficLight {
         hard = TrafficLogicController.getHard();
         soft = TrafficLogicController.getSoft();
         cool = TrafficLogicController.getCool();
-
     }
 
     /**
-     * @param isGreen          tregon a eshte i hapur per kalim apo jo semafori perkates
      * @param timeFrameLength  in seconds psh 10 sek ni frame mu kon i gjate
      * @param minTimeGreen     minimumi i frame-ave per te cilet semafori dueht te rri i hapur per te mos marre hard penalty
      * @param maxTimeRed       maksimumi i frame-ave per te cilet semafori guxon te rri i mbyllur pa marre hard penalty
      * @param prefMinTimeGreen numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i hapur
      * @param prefMaxTimeRed   numrat e frame-ave te rekomanduar nga user-i per te cilat semafori te qendroj i mbyllur
      */
-    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index, boolean isGreen, int timeFrameLength,
+    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index, int timeFrameLength,
                         int minTimeGreen, int maxTimeRed, int prefMinTimeGreen, int prefMaxTimeRed) {
         this.priority = 1;
         this.index = index;
-        this.isGreen = isGreen;
         this.timeFrame = timeFrameLength;
         this.minTimeGreen = minTimeGreen;
         this.maxTimeRed = maxTimeRed;
@@ -50,12 +46,10 @@ public abstract class TrafficLight {
 
     }
 
-    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index,
-                        boolean isGreen, int timeFrame, double priority, int minTimeGreen, int maxTimeRed,
+    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index, int timeFrame, double priority, int minTimeGreen, int maxTimeRed,
                         int prefMinTimeGreen, int prefMaxTimeRed) {
         this.trafficLightsConstraint = trafficLightsConstraint;
         this.index = index;
-        this.isGreen = isGreen;
         this.timeFrame = timeFrame;
         this.priority = priority;
         this.minTimeGreen = minTimeGreen;
@@ -64,6 +58,12 @@ public abstract class TrafficLight {
         this.prefMaxTimeRed = prefMaxTimeRed;
     }
 
+    public TrafficLight(IntersectionType[] trafficLightsConstraint, int index, int timeFrame) {
+        this.trafficLightsConstraint = trafficLightsConstraint;
+        this.index = index;
+        this.timeFrame = timeFrame;
+        this.priority = 1;
+    }
     public double getScore(boolean[][] sequence) {
         return Arrays.stream(sequence)
                 .map(timeFrame -> timeConstrainScore(timeFrame) + compatibilityConstraintScore(timeFrame))
@@ -170,16 +170,16 @@ public abstract class TrafficLight {
     private double checkCompatibilityForOpen(IntersectionType type, boolean affirmative){
         switch (type){
             case NEVER -> {
-                return affirmative ? - hard : cool;
+                return affirmative ? - hard : soft;
             }
             case UNPREFERRED-> {
-                return affirmative ? - soft  : soft;
+                return affirmative ? - soft  : cool;
             }
             case ACCEPTABLE -> {
-                return affirmative ? soft : - cool;
+                return affirmative ? cool : - cool;
             }
             case ALWAYS -> {
-                return affirmative ? cool : - hard;
+                return affirmative ? soft : - hard;
             }
             default -> {
                 return 0;
@@ -192,33 +192,18 @@ public abstract class TrafficLight {
                 return affirmative ? soft : - soft;
             }
             case UNPREFERRED-> {
-                return affirmative ? soft : - cool;
+                return affirmative ? cool : - cool;
             }
             case ACCEPTABLE -> {
                 return affirmative ? - cool : cool;
             }
             case ALWAYS -> {
-                return affirmative ? - hard : cool;
+                return affirmative ? - hard : soft;
             }
             default -> {
                 return 0;
             }
         }
-    }
-    public int getMinTimeGreen() {
-        return minTimeGreen;
-    }
-
-    public int getMaxTimeRed() {
-        return maxTimeRed;
-    }
-
-    public int getPrefMinTimeGreen() {
-        return prefMinTimeGreen;
-    }
-
-    public int getPrefMaxTimeRed() {
-        return prefMaxTimeRed;
     }
 
 }
