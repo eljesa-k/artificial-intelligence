@@ -36,6 +36,7 @@ public class TrafficLogicController {
             trafficLights = new TrafficLight[16];
             allowedTimeToRun = Integer.parseInt(prop.get("allowed_time_to_run").toString());
             int time_frame = Integer.parseInt(prop.get("time_frame").toString());
+            // TODO: nese e perdorim /time_frame kontrolloje kohen minimale
             sequenceLength = Integer.parseInt(prop.get("complete_interval").toString()) / time_frame;
 
             int min_time_green_vehicle  = Integer.parseInt(prop.get("min_time_green_vehicle").toString());
@@ -53,11 +54,11 @@ public class TrafficLogicController {
             cool = Integer.parseInt(prop.get("cool_constraint_penallty").toString());
 
             for (int i = 0; i < 12; i++) {
-                trafficLights[i] = new VehicleTrafficLight(constraints[i], i, false,time_frame,0.1,
+                trafficLights[i] = new VehicleTrafficLight(constraints[i], i,time_frame,0.1,
                                                             min_time_green_vehicle, max_time_red_vehicle, preferred_time_green_vehicle, preferred_time_red_vehicle, trafficCoefficients[i]);
             }
             for (int i = 12; i < 16; i++) {
-                trafficLights[i] = new PedestrianTrafficLight(constraints[i], i, false,time_frame,
+                trafficLights[i] = new PedestrianTrafficLight(constraints[i], i,time_frame,
                         min_time_green_pedestrian, max_time_red_pedestrian, preferred_time_green_pedestrian, preferred_time_red_pedestrian);
             }
         }

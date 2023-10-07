@@ -12,12 +12,12 @@ public class TestPopulation {
         // Create a sample sequence
         IntersectionType[] intersectionTypes1 = {IntersectionType.ALWAYS, IntersectionType.NEVER};
         VehicleTrafficLight trafficLight1 = new VehicleTrafficLight(
-                intersectionTypes1, 0, true, 10, 5, 20, 8, 15
+                intersectionTypes1, 0, 10, 5, 20, 8, 15
         );
 
         IntersectionType[] intersectionTypes2 = {IntersectionType.ACCEPTABLE, IntersectionType.UNPREFERRED};
         VehicleTrafficLight trafficLight2 = new VehicleTrafficLight(
-                intersectionTypes2, 1, false, 10, 3, 15, 6, 12
+                intersectionTypes2, 1, 10, 3, 15, 6, 12
         );
         boolean[][] sequenceE = new boolean[10][2];
         Sequence sequence = new Sequence(
